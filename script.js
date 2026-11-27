@@ -213,38 +213,6 @@ const T = (x, y, s, o = '') => `<text x="${x}" y="${y}" ${o}>${s}</text>`;
 
 const STORIES = [
   {
-    id: 'kpi', kicker: 'Dashboard · Sales monitoring', title: 'Monitoring KPI Sales: one screen for the whole sales floor',
-    d: 'A single 1920×1080 screen for the sales room: achievement against target by region and country, month-over-month and year-over-year, and five core sales KPIs side by side.',
-    cs: [['Problem', 'The sales floor needed one shared view of achievement against target, without someone rebuilding a report by hand.'], ['Built', 'A wall-screen dashboard with a region map, a total-achievement card and five core KPIs with MoM and YoY badges.'], ['Result', 'Refreshes through Google Apps Script, so the numbers stay current without anyone touching them.']],
-    tags: ['HTML', 'Apps Script', 'Sales KPI'],
-    states: [['Sep', [82, 64, 91, 58, 73, 4.1, 71, 88, 45, 62, 95, 77, 54, 69, 80]], ['Oct', [94, 71, 87, 66, 81, 4.6, 84, 92, 58, 70, 99, 81, 63, 75, 88]], ['Nov', [103, 79, 96, 72, 90, 5.2, 97, 105, 66, 82, 108, 90, 71, 84, 95]]],
-    draw(v, s, si) {
-      const red = '#C8102E';
-      const tabs = ['Sep', 'Oct', 'Nov'].map((m, i) => `<rect x="${470 + i * 52}" y="22" width="48" height="24" rx="7" fill="${i === si ? '#fff' : 'transparent'}"/>${T(494 + i * 52, 38, m, `font-size="11" text-anchor="middle" font-weight="700" fill="${i === si ? red : '#5B606B'}"`)}`).join('');
-      const tiles = v.slice(6, 15).map((a, i) => { const x = 336 + (i % 3) * 94, y = 200 + Math.floor(i / 3) * 62, op = .25 + Math.min(a, 110) / 110 * .75; return `<rect x="${x}" y="${y}" width="86" height="54" rx="9" fill="${red}" opacity="${op}"/>${T(x + 10, y + 21, ['SA', 'SG', 'MY', 'JP', 'CN', 'TH', 'KR', 'TR', 'AU'][i], 'font-size="11" font-weight="700" fill="#fff"')}${T(x + 10, y + 42, a.toFixed(0) + '%', 'font-size="15" font-weight="800" fill="#fff"')}`; }).join('');
-      const kpis = v.slice(1, 5).map((a, i) => `<rect x="24" y="${198 + i * 46}" width="284" height="38" rx="10" fill="#fff"/>${T(38, 222 + i * 46, 'KPI ' + (i + 2), 'font-size="12" font-weight="700" fill="#1A1D24"')}<rect x="100" y="${213 + i * 46}" width="150" height="7" rx="4" fill="#F1F2F4"/><rect x="100" y="${213 + i * 46}" width="${1.5 * Math.min(a, 100)}" height="7" rx="4" fill="${red}"/>${T(296, 222 + i * 46, a.toFixed(0) + '%', 'font-size="12" font-weight="700" text-anchor="end" fill="#1A1D24"')}`).join('');
-      return svg('#EEF0F3', `<rect x="16" y="14" width="608" height="40" rx="12" fill="#fff"/><rect x="26" y="22" width="24" height="24" rx="7" fill="${red}"/>${T(60, 40, 'Monitoring KPI Sales', 'font-size="15" font-weight="800" fill="#1A1D24"')}<rect x="462" y="18" width="160" height="32" rx="10" fill="#F2F3F5"/>${tabs}
-        <rect x="16" y="66" width="300" height="118" rx="14" fill="${red}"/>${T(34, 94, 'TOTAL ACHIEVEMENT', 'font-size="11" font-weight="700" fill="#fff" opacity=".85"')}${T(34, 140, v[0].toFixed(1) + '%', 'font-size="44" font-weight="800" fill="#fff"')}${T(34, 166, 'Rp ' + v[5].toFixed(2) + ' B of target · altered', 'font-size="11.5" font-weight="600" fill="#fff"')}
-        <rect x="326" y="66" width="298" height="118" rx="14" fill="#fff"/>${T(342, 90, 'MoM by month', 'font-size="12" font-weight="700" fill="#1A1D24"')}${v.slice(6, 15).map((a, i) => `<rect x="${346 + i * 30}" y="${172 - a * .62}" width="18" height="${a * .62}" rx="4" fill="${i === 8 ? red : '#F4B6BF'}"/>`).join('')}
-        <rect x="16" y="190" width="300" height="196" rx="14" fill="#F7F8FA"/>${kpis}
-        <rect x="326" y="190" width="298" height="196" rx="14" fill="#fff"/>${tiles}`);
-    }
-  },
-  {
-    id: 'rev', kicker: 'Dashboard · Revenue and customers', title: 'Revenue & Customer report: who is new, who came back, who extended',
-    d: 'A multi-page report for revenue and customer behaviour: new, returning and extending customers, marketplace and SKU performance, country split and a pivot page.',
-    cs: [['Problem', 'Revenue questions (who is new, who came back, which channel and SKU) each needed a separate export and pivot.'], ['Built', 'Six pages (Revenue, Customer, Marketplace, SKU, Country, Pivot) where every chart cross-filters and every table copies out as CSV.'], ['Result', 'One place to answer customer and revenue questions, read straight from the reporting database.']],
-    tags: ['HTML', 'Cross-filter', 'TiDB', 'CSV export'],
-    states: [0, 1, 2, 3].map(k => { const r = rng(20 + k); return [['Revenue', 'Customer', 'Marketplace', 'SKU'][k], Array.from({ length: 30 }, () => 20 + r() * 60)]; }),
-    draw(v, s, si) {
-      const tabs = ['Revenue', 'Customer', 'Marketplace', 'SKU', 'Country', 'Pivot'].map((t, i) => `${T(28 + i * 96, 74, t, `font-size="12" fill="${i === si ? '#e6e7ea' : '#8a8f98'}" font-weight="${i === si ? 600 : 400}"`)}${i === si ? `<rect x="${24 + i * 96}" y="84" width="${t.length * 7 + 8}" height="2" fill="#206bc4"/>` : ''}`).join('');
-      const kp = [['Revenue', 'Rp ' + (v[0] / 10).toFixed(2) + ' B'], ['New customers', fmt(v[1] * 41)], ['Returning', fmt(v[2] * 23)], ['Extend', fmt(v[3] * 9)]].map((k, i) => `<rect x="${20 + i * 152}" y="100" width="144" height="70" rx="7" fill="#1e1f22" stroke="#2b2d31"/>${T(32 + i * 152, 122, k[0].toUpperCase(), 'font-size="9.5" fill="#8a8f98" font-weight="600" letter-spacing=".5"')}${T(32 + i * 152, 152, k[1], 'font-size="19" fill="#e6e7ea" font-weight="600"')}`).join('');
-      const bars = Array.from({ length: 12 }, (_, i) => { const a = v[i + 4] * 1.4, b = v[i + 16] * .9, c = v[(i + 8) % 30] * .45, x = 36 + i * 48; return `<rect x="${x}" y="${376 - a}" width="28" height="${a}" fill="#206bc4"/><rect x="${x}" y="${376 - a - b}" width="28" height="${b}" fill="#4a8fe0" opacity=".7"/><rect x="${x}" y="${376 - a - b - c}" width="28" height="${c}" rx="2" fill="#2fb344"/>`; }).join('');
-      return svg('#151617', `<rect width="640" height="50" fill="#1a1b1e"/><rect x="20" y="13" width="24" height="24" rx="6" fill="#fff"/>${T(54, 31, 'Laporan Revenue &amp; Customer', 'font-size="14" font-weight="700" fill="#e6e7ea"')}<rect y="50" width="640" height="40" fill="#1a1b1e"/>${tabs}${kp}
-        <rect x="20" y="180" width="600" height="206" rx="7" fill="#1e1f22" stroke="#2b2d31"/>${T(34, 202, 'CUSTOMERS BY MONTH · NEW / RETURNING / EXTEND', 'font-size="9.5" fill="#8a8f98" font-weight="600"')}${bars}`);
-    }
-  },
-  {
     id: 'ms', kicker: 'Dashboard · Market share', title: 'Market Share: how much of each country’s travel demand is ours',
     d: 'Our orders set against the whole market, country by country and product by product.',
     cs: [['Problem', 'Order growth alone did not show whether we were gaining ground or a competitor was taking it.'], ['Built', 'Share of market for eSIM, SIM card and WiFi, with a drill-down per key destination and change against the previous period.'], ['Result', 'The team sees where share is growing and where it is slipping, country by country.']],
@@ -475,7 +443,9 @@ $('#modalX').addEventListener('click', closeModal);
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.target.closest('[data-close]')) closeModal(); });
 
 const SHOTS = [
- {grp:'Interactive HTML · built with Claude',name:'Order Business Unit',file:'project_order_business_unit_dashboard.html',blurb:'Orders by business unit, product and variant, with growth and a run-rate forecast.',views:[['Overview','bu-main'],['Growth BU','bu-growth'],['Forecasting','bu-forecast']]},
+ {grp:'Interactive HTML · built with Claude',name:'Monitoring KPI Sales',file:'dashboards/monitoring-kpi-sales.html',blurb:'One wall screen for the sales floor: achievement vs target by region and country, MoM, YoY and five core KPIs.',views:[['Overview','kpi-main']]},
+ {name:'Revenue & Customer report',file:'dashboards/revenue-customer.html',blurb:'Revenue by new, returning and extending customers, by marketplace, SKU and country, with cross-filtering.',views:[['Summary','rev-main']]},
+ {name:'Order Business Unit',file:'project_order_business_unit_dashboard.html',blurb:'Orders by business unit, product and variant, with growth and a run-rate forecast.',views:[['Overview','bu-main'],['Growth BU','bu-growth'],['Forecasting','bu-forecast']]},
  {name:'Supplier Performance',file:'project_supplier_performance_dashboard.html',blurb:'Supplier orders, revenue and share, with growth and forecast.',views:[['Overview','sup-main'],['Growth Supplier','sup-growth'],['Forecasting','sup-forecast']]},
  {name:'Vendor Usage',file:'project_vendor_usage_dashboard.html',blurb:'GB purchased against GB used per supplier, with pacing.',views:[['Usage','usage-main'],['Forecasting and insight','usage-forecast']]},
  {grp:'Looker Studio',name:'eSIM & SIM Card Performance',src:'Looker Studio · recreated with altered data',blurb:'Order volume by business unit, supplier and brand vendor.',views:[['Business Unit','lk-esim-bu'],['Supplier','lk-esim-supplier'],['Brand Vendor','lk-esim-vendor']]},
@@ -492,11 +462,11 @@ const SHOTS = [
     const key = d.views[gv][1], body = $('#arcBody');
     if (LKV[key]) { body.dataset.lk = key; body.innerHTML = '<div class="lk">' + LKV[key]() + '</div>'; fitLk(); }
     else { body.dataset.lk = ''; body.innerHTML = '<img id="arcImg" alt="">'; const img = $('#arcImg'); img.style.opacity = 0; img.onload = () => img.style.opacity = 1; img.src = 'assets/shots/' + key + '.png'; img.alt = d.name + ' dashboard, ' + d.views[gv][0]; }
-    $('#arcUrl').textContent = d.file || d.src; $('#arcOpen').style.display = d.file ? '' : 'none'; if (d.file) $('#arcOpen').href = d.file; $('#arcBody').scrollTop = 0;
+    $('#arcUrl').textContent = d.file || d.src; $('#arcOpen').style.display = d.file ? '' : 'none'; $('#arcBody').title = d.file ? 'Open live dashboard' : 'Click to enlarge'; $('#arcBody').classList.toggle('live', !!d.file); if (d.file) $('#arcOpen').href = d.file; $('#arcBody').scrollTop = 0;
   };
   $('#arcList').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (!b) return; gi = +b.dataset.g; gv = 0; render(); });
   $('#arcTabs').addEventListener('click', e => { const b = e.target.closest('[data-gv]'); if (!b) return; gv = +b.dataset.gv; render(); });
-  $('#arcBody').addEventListener('click', () => { const k = $('#arcBody').dataset.lk; $('#lb').innerHTML = k ? '<div class="lk lk-big">' + LKV[k]() + '</div>' : '<img id="lbImg" alt="" src="' + $('#arcImg').src + '">'; $('#lb').classList.add('open'); const b = $('#lb .lk'); if (b) b.style.zoom = Math.min(1, (innerWidth - 48) / 1200); });
+  $('#arcBody').addEventListener('click', () => { const d = SHOTS[gi]; if (d.file) { window.open(d.file, '_blank', 'noopener'); return; } const k = $('#arcBody').dataset.lk; $('#lb').innerHTML = k ? '<div class="lk lk-big">' + LKV[k]() + '</div>' : '<img id="lbImg" alt="" src="' + $('#arcImg').src + '">'; $('#lb').classList.add('open'); const b = $('#lb .lk'); if (b) b.style.zoom = Math.min(1, (innerWidth - 48) / 1200); });
   addEventListener('resize', fitLk);
   $('#lb').addEventListener('click', () => $('#lb').classList.remove('open'));
   render();
