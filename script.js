@@ -35,7 +35,7 @@ function tween(from, to, dur, cb) {
   $$('[data-count]').forEach(el => cio.observe(el));
 
   $('#pdfBtn').addEventListener('click', () => print());
-  $('#copyEmail').addEventListener('click', e => { navigator.clipboard && navigator.clipboard.writeText('nouvalzein11@gmail.com'); e.target.textContent = 'Copied ✓'; setTimeout(() => e.target.textContent = 'Copy email', 1600); });
+  $('#copyEmail').addEventListener('click', e => { const b = e.currentTarget; navigator.clipboard && navigator.clipboard.writeText('nouvalzein11@gmail.com').catch(() => {}); b.classList.add('done'); b.title = 'Copied'; setTimeout(() => { b.classList.remove('done'); b.title = 'Copy email'; }, 1600); });
 })();
 
 class Film {
