@@ -265,8 +265,8 @@ const STORIES = [
     id: 'obu', kicker: 'Dashboard · Orders by business unit', title: 'Orders by Business Unit: outbound and inbound demand, with a forecast',
     d: 'Orders by business unit, product and plan, split into Outbound (travellers leaving Indonesia) and Inbound (visitors arriving).',
     cs: [['Problem', 'Outbound and inbound travellers behave differently, but were read from one mixed view.'], ['Built', 'Two builds with the same layout: share by business unit, month-over-month growth, top plans and a run-rate forecast.'], ['Result', 'Each team reads its own demand and sees the month-end projection before the month closes.']],
-    prev: [['Earlier build ↗', 'project_order_business_unit_dashboard.html']],
-    tags: ['HTML', 'Chart.js', 'TiDB', 'Forecasting'],
+    prev: [['Open interactive dashboard ↗', 'project_order_business_unit_dashboard.html']],
+    tags: ['HTML', 'Chart.js', 'TiDB', 'Forecasting', 'Built with Claude'],
     states: [['Outbound', [52, 61, 58, 66, 72, 69, 78, 84, 80, 88, 93, 101, 46, 30, 24]], ['Inbound', [31, 28, 35, 39, 36, 44, 49, 47, 55, 58, 63, 70, 38, 42, 20]]],
     draw(v, s, si) {
       const ac = si ? '#0ea5a4' : '#6366f1', X = i => 44 + i * 28, Y = x => 360 - x * 1.7;
@@ -299,7 +299,7 @@ const STORIES = [
     id: 'sup', kicker: 'Dashboards · Supplier and vendor', title: 'Supplier Performance and Vendor Usage: what we buy against what customers use',
     d: 'Supplier share, growth and top plans on one side; data purchased against data used on the other.',
     cs: [['Problem', 'Vendor reviews needed a shared set of numbers, and data bought from suppliers was not checked against data actually used.'], ['Built', 'Supplier share with top movers, plus GB purchased vs GB used per supplier for fixed-quota and daily-pass plans, with pacing and a next-month projection.'], ['Result', 'Moved onto the reporting database, so a refresh is one query instead of an export.']],
-    prev: [['Earlier supplier build ↗', 'project_supplier_performance_dashboard.html'], ['Earlier usage build ↗', 'project_vendor_usage_dashboard.html']],
+    prev: [['Open Supplier Performance ↗', 'project_supplier_performance_dashboard.html'], ['Open Vendor Usage ↗', 'project_vendor_usage_dashboard.html']],
     tags: ['HTML', 'TiDB', 'Vendor management'],
     states: [0, 1, 2].map(k => { const r = rng(60 + k); return [k, Array.from({ length: 12 }, () => .25 + r() * .75)]; }),
     draw(v) {
@@ -431,7 +431,7 @@ const TASKS = [
  {t:'Product-market creation pipeline',c:'Automation',s:'Shipped',tools:['VBA','Apps Script','API','N8N'],d:'Replaced a monthly manual cycle of finding and maintaining products on every marketplace with a pipeline that runs in minutes.',cs:[['Problem','Creating and maintaining products on every marketplace was a manual, month-long cycle.'],['Built','A pipeline from supplier feeds through normalization, SKU mapping and price checks to an API push to each marketplace.'],['Result','20,000+ SKUs processed in one run: from a monthly cycle to minutes.']],link:'auto'},
  {t:'Automated pricing validation',c:'Governance',s:'Shipped',tools:['Apps Script','Sheets'],d:'Recomputes a margin floor from supplier cost, FX and fees for every SKU and blocks prices below it.',cs:[['Problem','Supplier costs and FX move, and a manual price check let below-margin prices slip through.'],['Built','A validator that recomputes the margin floor per SKU and flags prices before they reach a marketplace.'],['Result','Less human error and protected margin across product lines.']],link:'auto'},
  {t:'AI-assisted operations',c:'Automation',s:'Shipped',tools:['Claude','Knowledge base'],d:'An AI agent for CS and Technical teams, plus AI-assisted automations for recurring reporting work.',cs:[['Problem','CS and Technical teams searched scattered notes for answers, and recurring reports and data exports were done by hand.'],['Built','A knowledge-base agent for both teams, and scheduled AI-assisted runs for dashboard refreshes and weekly portal exports.'],['Result','Faster answers on open issues and recurring reporting that runs without manual steps.']]},
- {t:'Interactive HTML dashboard suite',c:'Dashboard',s:'Recent',tools:['HTML','Chart.js','TiDB','Apps Script'],d:'Sales KPI, revenue and customer, market share, orders by business unit, complaints, and supplier and vendor usage.',cs:[['Problem','Looker Studio reports were slow to filter and each refresh started with an export.'],['Built','Six interactive HTML dashboards with cross-filtering, forecasts and CSV export, read from the reporting database.'],['Result','Refreshes are one query, and the same view answers questions for sales, product and vendor teams.']],link:'builds'},
+ {t:'Interactive HTML dashboard suite',c:'Dashboard',s:'Recent',tools:['HTML','Chart.js','TiDB','Apps Script','Claude'],d:'Sales KPI, revenue and customer, market share, orders by business unit, complaints, and supplier and vendor usage.',cs:[['Problem','Looker Studio reports were slow to filter and each refresh started with an export.'],['Built','Six interactive HTML dashboards, built with Claude, with cross-filtering, forecasts and CSV export, read from the reporting database.'],['Result','Refreshes are one query, and the same view answers questions for sales, product and vendor teams.']],link:'builds'},
  {t:'Looker Studio reporting suite',c:'Dashboard',s:'Shipped',tools:['Looker Studio','SQL'],d:'KPI, product performance, supplier and fleet reports on the sales database, used in recurring reviews.',cs:[['Problem','Decisions waited for someone to compile a report.'],['Built','Looker Studio reports on KPIs, sales trends, eSIM and SIM card performance, and inbound and outbound fleet cost and usage.'],['Result','One view for KPIs, trends and vendor reviews, available whenever it is needed.']],link:'archive'},
  {t:'Reporting database',c:'Database',s:'Shipped',tools:['TiDB Cloud','MySQL','SQL views'],d:'A reporting database with three fact tables (millions of rows) and nine views that feed the dashboards.',cs:[['Problem','Every dashboard refresh started from a fresh export and manual cleanup.'],['Built','Fact tables for orders, supplier orders and SKU-to-vendor mapping, a plan-grouping column that harmonizes plan names, and reporting logic in views.'],['Result','Dashboards read from shared views, so numbers match across reports.']],link:'db'},
  {t:'New SKU concept across marketplaces',c:'Product',s:'Shipped',tools:['SKU design','API'],d:'Redesigned how SKUs are structured on every marketplace so the frontend team can move or change products with less effort.',cs:[['Problem','The old SKU structure made moving or changing products on marketplaces slow for the frontend team.'],['Built','A new SKU concept, with backend SKU management and API integration that I own.'],['Result','Accurate catalog data across systems and less effort per product change.']]},
@@ -475,7 +475,10 @@ $('#modalX').addEventListener('click', closeModal);
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.target.closest('[data-close]')) closeModal(); });
 
 const SHOTS = [
- {name:'eSIM & SIM Card Performance',src:'Looker Studio · recreated with altered data',blurb:'Order volume by business unit, supplier and brand vendor.',views:[['Business Unit','lk-esim-bu'],['Supplier','lk-esim-supplier'],['Brand Vendor','lk-esim-vendor']]},
+ {grp:'Interactive HTML · built with Claude',name:'Order Business Unit',file:'project_order_business_unit_dashboard.html',blurb:'Orders by business unit, product and variant, with growth and a run-rate forecast.',views:[['Overview','bu-main'],['Growth BU','bu-growth'],['Forecasting','bu-forecast']]},
+ {name:'Supplier Performance',file:'project_supplier_performance_dashboard.html',blurb:'Supplier orders, revenue and share, with growth and forecast.',views:[['Overview','sup-main'],['Growth Supplier','sup-growth'],['Forecasting','sup-forecast']]},
+ {name:'Vendor Usage',file:'project_vendor_usage_dashboard.html',blurb:'GB purchased against GB used per supplier, with pacing.',views:[['Usage','usage-main'],['Forecasting and insight','usage-forecast']]},
+ {grp:'Looker Studio',name:'eSIM & SIM Card Performance',src:'Looker Studio · recreated with altered data',blurb:'Order volume by business unit, supplier and brand vendor.',views:[['Business Unit','lk-esim-bu'],['Supplier','lk-esim-supplier'],['Brand Vendor','lk-esim-vendor']]},
  {name:'Inbound Report',src:'Looker Studio · recreated with altered data',blurb:'Data quota cost, usage and revenue for the inbound modem fleet.',views:[['Cost & Usage','lk-inbound-usage'],['Revenue','lk-inbound-revenue'],['Cost per SIM Provider','lk-inbound-provider']]},
  {name:'Outbound Modem Report',src:'Looker Studio · recreated with altered data',blurb:'Roaming modem orders, plan mix and data usage across vendors.',views:[['Plan & Destination','lk-outbound-plan'],['Usage','lk-outbound-usage'],['Vendor A Orders','lk-outbound-vendor-a'],['Vendor B Orders','lk-outbound-vendor-b']]}
 ];
@@ -484,7 +487,7 @@ const SHOTS = [
   function fitLk() { const b = $('#arcBody'), l = $('.lk', b); if (l) l.style.zoom = Math.min(1, (b.clientWidth - 28) / 1000); }
   const render = () => {
     const d = SHOTS[gi];
-    $('#arcList').innerHTML = SHOTS.map((x, i) => `<button class="${i === gi ? 'on' : ''}" data-g="${i}"><h4>${x.name}</h4><p>${x.blurb}</p></button>`).join('');
+    $('#arcList').innerHTML = SHOTS.map((x, i) => `${x.grp ? `<p class="arc-grp">${x.grp}</p>` : ''}<button class="${i === gi ? 'on' : ''}" data-g="${i}"><h4>${x.name}</h4><p>${x.blurb}</p></button>`).join('');
     $('#arcTabs').innerHTML = d.views.map((v, i) => `<button class="${i === gv ? 'on' : ''}" data-gv="${i}">${v[0]}</button>`).join('');
     const key = d.views[gv][1], body = $('#arcBody');
     if (LKV[key]) { body.dataset.lk = key; body.innerHTML = '<div class="lk">' + LKV[key]() + '</div>'; fitLk(); }
