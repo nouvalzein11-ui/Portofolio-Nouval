@@ -26,9 +26,9 @@
 <nav class="menu" id="menu" aria-hidden="true">
   <div class="menu-in">
     <p class="kicker">Sections</p>
-    <a href="#builds"><span>01</span>Latest builds</a>
+    <a href="#builds"><span>01</span>Featured work</a>
     <a href="#log"><span>02</span>Work log</a>
-    <a href="#archive"><span>03</span>Dashboard archive</a>
+    <a href="#archive"><span>03</span>Looker Studio reports</a>
     <a href="#db"><span>04</span>Reporting database</a>
     <a href="#auto"><span>05</span>Automation</a>
     <a href="#about"><span>06</span>Skills and experience</a>
@@ -60,7 +60,7 @@
       <p class="role">Product Operations · Data · Automation · Jakarta</p>
       <p class="lede">I run product operations, pricing governance and data reporting for a catalog of 30,000+ travel internet products (digital eSIMs and physical SIM cards used abroad), and I build the dashboards and automations behind it.</p>
       <div class="ctas">
-        <a class="btn dark" href="#builds">See the latest builds</a>
+        <a class="btn dark" href="#builds">See featured work</a>
         <a class="btn" href="#log">Open the work log</a>
         <button class="btn" id="pdfBtn" type="button">Save as PDF</button>
       </div>
@@ -76,9 +76,9 @@
 
 <section class="wrap builds" id="builds">
   <div class="sec-head">
-    <p class="kicker">01 · Latest builds · Nov 2026</p>
-    <h2 class="sec-title">New dashboards and one automation, rebuilt this month</h2>
-    <p class="dek">Rebuilt as interactive HTML. The previews below are live animations; every figure in them has been altered for this page, so the shapes are real but the numbers are not.</p>
+    <p class="kicker">01 · Featured work</p>
+    <h2 class="sec-title">The problems, what I built, and what changed</h2>
+    <p class="dek">Each build below starts with the problem it solved. The previews are live animations; names and figures are altered for this page, so the shapes are real but the numbers are not.</p>
   </div>
 
   <article class="story feature">
@@ -103,12 +103,12 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker">02 · Work log</p>
-      <h2 class="sec-title">Everything I have built and run</h2>
-      <p class="dek">Filter by type or search by tool. Click any entry for the story.</p>
+      <h2 class="sec-title">Everything I have built and run, in one list</h2>
+      <p class="dek">Filter by type or search by tool. Click any entry for the problem, the build and the result.</p>
     </div>
     <div class="log-tools">
       <div class="chips" id="logChips"></div>
-      <input id="logSearch" type="search" placeholder="Search a tool, e.g. Looker, N8N, SQL" aria-label="Search the work log">
+      <input id="logSearch" type="search" placeholder="Search a tool, e.g. Looker, SQL, Apps Script" aria-label="Search the work log">
     </div>
     <p class="log-count" id="logCount"></p>
     <div class="log-list" id="logList"></div>
@@ -117,9 +117,9 @@
 
 <section class="wrap" id="archive">
   <div class="sec-head">
-    <p class="kicker">03 · Dashboard archive</p>
-    <h2 class="sec-title">The earlier builds, full size</h2>
-    <p class="dek">Screenshots of the first HTML dashboards and the Looker Studio reports I maintain. The HTML builds use masked names; the Looker Studio reports are recreated in their original layout with altered names and figures. Click to enlarge.</p>
+    <p class="kicker">03 · Looker Studio reports</p>
+    <h2 class="sec-title">The recurring reports teams read every week</h2>
+    <p class="dek">Looker Studio reports I built and maintained for product, supplier and fleet reviews, recreated in their original layout with altered names and figures. Click to enlarge.</p>
   </div>
   <div class="archive">
     <div class="arc-list" id="arcList"></div>
@@ -136,9 +136,9 @@
     <div class="sec-head">
       <p class="kicker">04 · Reporting database</p>
       <h2 class="sec-title">The database behind the dashboards</h2>
-      <p class="dek">I designed and run my own reporting database on TiDB Cloud (MySQL-compatible). Raw exports land in fact tables, views shape them, dashboards read from the views.</p>
+      <p class="dek">I designed and ran a reporting database on TiDB Cloud (MySQL-compatible). Raw exports land in fact tables, views shape them, dashboards read from the views. Table and column names here are generalized.</p>
     </div>
-    <div class="flowline"><span>Source exports</span><i></i><span>3 fact tables · ~2.5M rows</span><i></i><span>9 reporting views</span><i></i><span>Dashboards and Looker Studio</span></div>
+    <div class="flowline"><span>Source exports</span><i></i><span>3 fact tables · millions of rows</span><i></i><span>9 reporting views</span><i></i><span>Dashboards and Looker Studio</span></div>
     <div class="dbx">
       <div class="tbls" id="tbls"></div>
       <div>
@@ -147,7 +147,7 @@
         <p class="kicker" style="margin-top:22px">Reporting views</p>
         <div class="cols views" id="views"></div>
         <pre class="sql" id="sql"></pre>
-        <p class="note">Schema only. No customer data is shown. Row counts are approximate.</p>
+        <p class="note">Simplified, generalized schema. No company or customer data is shown.</p>
       </div>
     </div>
   </div>
@@ -249,7 +249,7 @@
 <section class="wrap contact" id="contact">
   <p class="kicker">07 · Contact</p>
   <h2 class="sec-title big">Let’s talk.</h2>
-  <p class="dek">Open to Product Operations, Business Operations and Data Analyst conversations.</p>
+  <p class="dek">Happy to talk about product operations, data and automation.</p>
   <div class="contact-row">
     <div class="bubble b-mail">
       <a class="b-link" href="mailto:nouvalzein11@gmail.com" aria-label="Email nouvalzein11@gmail.com"></a>
@@ -263,7 +263,7 @@
       <span class="b-txt"><small>LinkedIn</small><b>Nouval Zein</b></span>
       <span class="b-go" aria-hidden="true">↗</span>
     </div>
-    <div class="bubble b-wa">
+    <div class="bubble b-wa print-only">
       <a class="b-link" href="https://wa.me/6285691073273" target="_blank" rel="noopener" aria-label="WhatsApp +62 856-9107-3273"></a>
       <span class="b-ico"><img src="assets/icons/whatsapp.svg" alt="" width="22" height="22"></span>
       <span class="b-txt"><small>WhatsApp · Phone</small><b>+62 856-9107-3273</b></span>
@@ -276,7 +276,7 @@
 
 <footer class="foot wrap">
   <span>© 2026 Mohammad Nouval Zein</span>
-  <span>Figures in the animated previews are altered for this page.</span>
+  <span>Names and figures in the previews are altered for this page.</span>
 </footer>
 
 <div class="modal" id="modal" aria-hidden="true">

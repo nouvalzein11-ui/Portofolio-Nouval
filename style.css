@@ -261,7 +261,7 @@ section{position:relative}
 @media(max-width:760px){.timeline article{grid-template-columns:1fr;gap:4px}}
 .contact{padding-top:72px;padding-bottom:60px}
 .contact .sec-title{margin-top:10px}
-.contact-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:30px}
+.contact-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;margin-top:30px}
 .bubble{--c:#141414;position:relative;display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fff;border:1px solid var(--line);
   border-radius:22px 22px 22px 4px;box-shadow:0 1px 0 rgba(0,0,0,.03),0 14px 30px -22px rgba(0,0,0,.35);
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;opacity:0;animation:bubIn .5s cubic-bezier(.2,.8,.2,1) forwards}
@@ -290,7 +290,9 @@ section{position:relative}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+.print-only{display:none!important}
 @media print{
+  .print-only{display:flex!important}
   .nav,.menu,.playbtn,.cursor,.modal,.lb,#runBtn,.ctas,.log-tools,.arc-tabs{display:none!important}
   .hero{display:none}
   .band,.band.dark{background:#fff!important;color:#000!important;padding:20px 0}
@@ -323,3 +325,10 @@ section{position:relative}
 .lk .sc em{font-style:normal;font-size:10.5px}.lk .sc em.up{color:#188038}.lk .sc em.dn{color:#d93025}
 .lk.lk-big{width:1200px;margin:auto;cursor:zoom-out}
 .arc-body .lk{cursor:zoom-in}
+
+.srow ul.cs li{padding-left:0;display:grid;grid-template-columns:78px minmax(0,1fr);gap:0 8px}
+.srow ul.cs li:before{display:none}
+.srow ul.cs li b{color:var(--ink);font-weight:600}
+.srow .prev{display:inline-block;margin:12px 16px 0 0;font:600 13px/1 Inter,system-ui,sans-serif;color:var(--ink2);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px}
+.s-Shipped{background:#dff3e6;color:#1d6b3a}.s-Recent{background:var(--accent-soft);color:#a3301d}
+.modal-card .cs{list-style:none;padding:0}.modal-card .cs li{margin:6px 0}.modal-card .cs b{display:inline-block;min-width:74px}

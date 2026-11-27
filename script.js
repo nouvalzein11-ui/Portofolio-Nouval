@@ -214,15 +214,15 @@ const T = (x, y, s, o = '') => `<text x="${x}" y="${y}" ${o}>${s}</text>`;
 const STORIES = [
   {
     id: 'kpi', kicker: 'Dashboard · Sales monitoring', title: 'Monitoring KPI Sales: one screen for the whole sales floor',
-    d: 'A single 1920×1080 screen for the sales room: achievement against target by region and country, month-over-month and year-over-year, and five KPIs side by side. Fed by Google Apps Script, so it refreshes without anyone touching it.',
-    pts: ['Region map with achievement shading', 'Hero card for total achievement vs target', 'KPI A to E with progress bars, MoM and YoY badges'],
+    d: 'A single 1920×1080 screen for the sales room: achievement against target by region and country, month-over-month and year-over-year, and five core sales KPIs side by side.',
+    cs: [['Problem', 'The sales floor needed one shared view of achievement against target, without someone rebuilding a report by hand.'], ['Built', 'A wall-screen dashboard with a region map, a total-achievement card and five core KPIs with MoM and YoY badges.'], ['Result', 'Refreshes through Google Apps Script, so the numbers stay current without anyone touching them.']],
     tags: ['HTML', 'Apps Script', 'Sales KPI'],
     states: [['Sep', [82, 64, 91, 58, 73, 4.1, 71, 88, 45, 62, 95, 77, 54, 69, 80]], ['Oct', [94, 71, 87, 66, 81, 4.6, 84, 92, 58, 70, 99, 81, 63, 75, 88]], ['Nov', [103, 79, 96, 72, 90, 5.2, 97, 105, 66, 82, 108, 90, 71, 84, 95]]],
     draw(v, s, si) {
       const red = '#C8102E';
       const tabs = ['Sep', 'Oct', 'Nov'].map((m, i) => `<rect x="${470 + i * 52}" y="22" width="48" height="24" rx="7" fill="${i === si ? '#fff' : 'transparent'}"/>${T(494 + i * 52, 38, m, `font-size="11" text-anchor="middle" font-weight="700" fill="${i === si ? red : '#5B606B'}"`)}`).join('');
       const tiles = v.slice(6, 15).map((a, i) => { const x = 336 + (i % 3) * 94, y = 200 + Math.floor(i / 3) * 62, op = .25 + Math.min(a, 110) / 110 * .75; return `<rect x="${x}" y="${y}" width="86" height="54" rx="9" fill="${red}" opacity="${op}"/>${T(x + 10, y + 21, ['SA', 'SG', 'MY', 'JP', 'CN', 'TH', 'KR', 'TR', 'AU'][i], 'font-size="11" font-weight="700" fill="#fff"')}${T(x + 10, y + 42, a.toFixed(0) + '%', 'font-size="15" font-weight="800" fill="#fff"')}`; }).join('');
-      const kpis = v.slice(1, 5).map((a, i) => `<rect x="24" y="${198 + i * 46}" width="284" height="38" rx="10" fill="#fff"/>${T(38, 222 + i * 46, 'KPI ' + 'BCDE'[i], 'font-size="12" font-weight="700" fill="#1A1D24"')}<rect x="100" y="${213 + i * 46}" width="150" height="7" rx="4" fill="#F1F2F4"/><rect x="100" y="${213 + i * 46}" width="${1.5 * Math.min(a, 100)}" height="7" rx="4" fill="${red}"/>${T(296, 222 + i * 46, a.toFixed(0) + '%', 'font-size="12" font-weight="700" text-anchor="end" fill="#1A1D24"')}`).join('');
+      const kpis = v.slice(1, 5).map((a, i) => `<rect x="24" y="${198 + i * 46}" width="284" height="38" rx="10" fill="#fff"/>${T(38, 222 + i * 46, 'KPI ' + (i + 2), 'font-size="12" font-weight="700" fill="#1A1D24"')}<rect x="100" y="${213 + i * 46}" width="150" height="7" rx="4" fill="#F1F2F4"/><rect x="100" y="${213 + i * 46}" width="${1.5 * Math.min(a, 100)}" height="7" rx="4" fill="${red}"/>${T(296, 222 + i * 46, a.toFixed(0) + '%', 'font-size="12" font-weight="700" text-anchor="end" fill="#1A1D24"')}`).join('');
       return svg('#EEF0F3', `<rect x="16" y="14" width="608" height="40" rx="12" fill="#fff"/><rect x="26" y="22" width="24" height="24" rx="7" fill="${red}"/>${T(60, 40, 'Monitoring KPI Sales', 'font-size="15" font-weight="800" fill="#1A1D24"')}<rect x="462" y="18" width="160" height="32" rx="10" fill="#F2F3F5"/>${tabs}
         <rect x="16" y="66" width="300" height="118" rx="14" fill="${red}"/>${T(34, 94, 'TOTAL ACHIEVEMENT', 'font-size="11" font-weight="700" fill="#fff" opacity=".85"')}${T(34, 140, v[0].toFixed(1) + '%', 'font-size="44" font-weight="800" fill="#fff"')}${T(34, 166, 'Rp ' + v[5].toFixed(2) + ' B of target · altered', 'font-size="11.5" font-weight="600" fill="#fff"')}
         <rect x="326" y="66" width="298" height="118" rx="14" fill="#fff"/>${T(342, 90, 'MoM by month', 'font-size="12" font-weight="700" fill="#1A1D24"')}${v.slice(6, 15).map((a, i) => `<rect x="${346 + i * 30}" y="${172 - a * .62}" width="18" height="${a * .62}" rx="4" fill="${i === 8 ? red : '#F4B6BF'}"/>`).join('')}
@@ -232,8 +232,8 @@ const STORIES = [
   },
   {
     id: 'rev', kicker: 'Dashboard · Revenue and customers', title: 'Revenue & Customer report: who is new, who came back, who extended',
-    d: 'A multi-page report for revenue and customer behaviour: new, returning and extending customers, marketplace and SKU performance, country split and a pivot page. Every chart cross-filters, every table expands, and any view copies out as CSV.',
-    pts: ['Pages for Revenue, Customer, Marketplace, SKU, Country and Pivot', 'Cross-filter by clicking any chart, with filter chips', 'Expandable tables with Copy CSV'],
+    d: 'A multi-page report for revenue and customer behaviour: new, returning and extending customers, marketplace and SKU performance, country split and a pivot page.',
+    cs: [['Problem', 'Revenue questions (who is new, who came back, which channel and SKU) each needed a separate export and pivot.'], ['Built', 'Six pages (Revenue, Customer, Marketplace, SKU, Country, Pivot) where every chart cross-filters and every table copies out as CSV.'], ['Result', 'One place to answer customer and revenue questions, read straight from the reporting database.']],
     tags: ['HTML', 'Cross-filter', 'TiDB', 'CSV export'],
     states: [0, 1, 2, 3].map(k => { const r = rng(20 + k); return [['Revenue', 'Customer', 'Marketplace', 'SKU'][k], Array.from({ length: 30 }, () => 20 + r() * 60)]; }),
     draw(v, s, si) {
@@ -246,8 +246,8 @@ const STORIES = [
   },
   {
     id: 'ms', kicker: 'Dashboard · Market share', title: 'Market Share: how much of each country’s travel demand is ours',
-    d: 'Our orders set against the whole market, country by country and product by product, so the team sees where share is growing and where a competitor is taking it. Overall view with a comparison table, country view with notes.',
-    pts: ['Our share vs market for eSIM, SIM card and WiFi', 'Country drill-down for SA, SG, MY, JP and CN', 'Share change against the previous period'],
+    d: 'Our orders set against the whole market, country by country and product by product.',
+    cs: [['Problem', 'Order growth alone did not show whether we were gaining ground or a competitor was taking it.'], ['Built', 'Share of market for eSIM, SIM card and WiFi, with a drill-down per key destination and change against the previous period.'], ['Result', 'The team sees where share is growing and where it is slipping, country by country.']],
     tags: ['HTML', 'Market analysis', 'Competitor view'],
     states: [['eSIM', [23.4, 31, 19, 27, 14, 22, 78, 64, 55, 92, 70]], ['SIM card', [17.8, 22, 14, 18, 9, 25, 60, 70, 52, 66, 81]], ['WiFi', [11.2, 9, 15, 12, 7, 13, 50, 44, 61, 58, 39]]],
     draw(v, s, si) {
@@ -262,16 +262,17 @@ const STORIES = [
     }
   },
   {
-    id: 'obu', kicker: 'Dashboard · Orders by business unit', title: 'Order Business Unit, now split into Inbound and Outbound',
-    d: 'The original Order BU dashboard became two: Outbound for travellers leaving Indonesia and Inbound for visitors arriving. Each keeps the growth, forecasting and top-plan tabs, and both refresh from TiDB on request.',
-    pts: ['Separate Inbound and Outbound builds, same layout', 'Share by business unit with month-over-month badges', 'Run-rate forecast for the month in progress'],
+    id: 'obu', kicker: 'Dashboard · Orders by business unit', title: 'Orders by Business Unit: outbound and inbound demand, with a forecast',
+    d: 'Orders by business unit, product and plan, split into Outbound (travellers leaving Indonesia) and Inbound (visitors arriving).',
+    cs: [['Problem', 'Outbound and inbound travellers behave differently, but were read from one mixed view.'], ['Built', 'Two builds with the same layout: share by business unit, month-over-month growth, top plans and a run-rate forecast.'], ['Result', 'Each team reads its own demand and sees the month-end projection before the month closes.']],
+    prev: [['Earlier build ↗', 'project_order_business_unit_dashboard.html']],
     tags: ['HTML', 'Chart.js', 'TiDB', 'Forecasting'],
     states: [['Outbound', [52, 61, 58, 66, 72, 69, 78, 84, 80, 88, 93, 101, 46, 30, 24]], ['Inbound', [31, 28, 35, 39, 36, 44, 49, 47, 55, 58, 63, 70, 38, 42, 20]]],
     draw(v, s, si) {
       const ac = si ? '#0ea5a4' : '#6366f1', X = i => 44 + i * 28, Y = x => 360 - x * 1.7;
       const pts = v.slice(0, 12).map((x, i) => X(i) + ',' + Y(x)).join(' ');
       const tot = v[12] + v[13] + v[14]; let a0 = -Math.PI / 2;
-      const don = [v[12], v[13], v[14]].map((x, i) => { const a1 = a0 + x / tot * 6.283, big = a1 - a0 > Math.PI ? 1 : 0, cx = 520, cy = 210, R = 62; const d = `M${cx + R * Math.cos(a0)},${cy + R * Math.sin(a0)} A${R},${R} 0 ${big} 1 ${cx + R * Math.cos(a1)},${cy + R * Math.sin(a1)}`; a0 = a1; return `<path d="${d}" fill="none" stroke="${[ac, '#f59e0b', '#cbd5e1'][i]}" stroke-width="24"/>`; }).join('');
+      const don = [v[12], v[13], v[14]].map((x, i) => { const a1 = a0 + x / (tot || 1) * 6.283, big = a1 - a0 > Math.PI ? 1 : 0, cx = 520, cy = 210, R = 62; const d = `M${cx + R * Math.cos(a0)},${cy + R * Math.sin(a0)} A${R},${R} 0 ${big} 1 ${cx + R * Math.cos(a1)},${cy + R * Math.sin(a1)}`; a0 = a1; return `<path d="${d}" fill="none" stroke="${[ac, '#f59e0b', '#cbd5e1'][i]}" stroke-width="24"/>`; }).join('');
       const tg = ['Outbound', 'Inbound'].map((t, i) => `<rect x="${430 + i * 96}" y="20" width="90" height="28" rx="14" fill="${i === si ? ac : '#e8edf3'}"/>${T(475 + i * 96, 38, t, `font-size="12" text-anchor="middle" font-weight="600" fill="${i === si ? '#fff' : '#475569'}"`)}`).join('');
       return svg('#f8fafc', `${T(24, 40, 'Order Business Unit', 'font-size="17" font-weight="800" fill="#0f172a"')}${tg}
         ${[['Orders', fmt(v[11] * 97)], ['MoM', '+' + (v[11] / v[10] * 100 - 100).toFixed(1) + '%'], ['Forecast', fmt(v[11] * 104)]].map((k, i) => `<rect x="${20 + i * 130}" y="64" width="122" height="66" rx="10" fill="#fff" stroke="#e2e8f0"/>${T(32 + i * 130, 86, k[0].toUpperCase(), 'font-size="10" font-weight="600" fill="#64748b"')}${T(32 + i * 130, 116, k[1], `font-size="20" font-weight="800" fill="${i === 1 ? '#16a34a' : '#0f172a'}"`)}`).join('')}
@@ -280,9 +281,9 @@ const STORIES = [
     }
   },
   {
-    id: 'cmp', kicker: 'Dashboard · Service quality', title: 'Complaint Dashboard, rebuilt from Looker Studio to HTML',
-    d: 'Weekly complaint rate against the number of devices in use, by country and product, with a running log of operational updates. Moving it off Looker Studio made it faster to filter and possible to refresh straight from the database.',
-    pts: ['Complaint rate vs devices in use, week over week', 'Per-country rate with up and down indicators', 'Operational updates log beside the numbers'],
+    id: 'cmp', kicker: 'Dashboard · Service quality', title: 'Complaint Dashboard: complaint rate against devices in use',
+    d: 'Weekly complaint rate against the number of devices in use, by country and product, with a running log of operational updates.',
+    cs: [['Problem', 'Raw complaint counts rise with sales, so they could not show whether service was actually getting worse.'], ['Built', 'A rate per device in use, per country and week, with the operational updates logged beside the numbers. Rebuilt from Looker Studio to HTML on the database.'], ['Result', 'Faster to filter, refreshed straight from the database, and used to drive corrective actions with vendors.']],
     tags: ['HTML', 'TiDB', 'Root cause'],
     states: [0, 1, 2].map(k => { const r = rng(40 + k); return [k, Array.from({ length: 22 }, () => r())]; }),
     draw(v) {
@@ -295,9 +296,10 @@ const STORIES = [
     }
   },
   {
-    id: 'sup', kicker: 'Dashboards · Supplier and vendor', title: 'Supplier Performance and Vendor Usage, rebuilt on the database',
-    d: 'The supplier and vendor dashboards moved onto my reporting database, so a refresh is one query instead of an export. Supplier share, growth and top plans on one side; data purchased against data used on the other.',
-    pts: ['Supplier share with click filtering and top movers', 'GB purchased vs GB used per supplier, Fixed Plan vs Daypass', 'Pacing and next-month projection'],
+    id: 'sup', kicker: 'Dashboards · Supplier and vendor', title: 'Supplier Performance and Vendor Usage: what we buy against what customers use',
+    d: 'Supplier share, growth and top plans on one side; data purchased against data used on the other.',
+    cs: [['Problem', 'Vendor reviews needed a shared set of numbers, and data bought from suppliers was not checked against data actually used.'], ['Built', 'Supplier share with top movers, plus GB purchased vs GB used per supplier for fixed-quota and daily-pass plans, with pacing and a next-month projection.'], ['Result', 'Moved onto the reporting database, so a refresh is one query instead of an export.']],
+    prev: [['Earlier supplier build ↗', 'project_supplier_performance_dashboard.html'], ['Earlier usage build ↗', 'project_vendor_usage_dashboard.html']],
     tags: ['HTML', 'TiDB', 'Vendor management'],
     states: [0, 1, 2].map(k => { const r = rng(60 + k); return [k, Array.from({ length: 12 }, () => .25 + r() * .75)]; }),
     draw(v) {
@@ -310,7 +312,7 @@ const STORIES = [
 
 (() => {
   const g = $('#storyGrid');
-  g.innerHTML = STORIES.map(s => `<article class="srow" id="st-${s.id}"><div class="stext"><p class="kicker">${s.kicker}</p><h3 class="story-title">${s.title}</h3><p class="d">${s.d}</p><ul>${s.pts.map(p => `<li>${p}</li>`).join('')}</ul><div class="tags">${s.tags.map(t => `<span>${t}</span>`).join('')}</div></div><div class="mini" data-m="${s.id}"></div></article>`).join('');
+  g.innerHTML = STORIES.map(s => `<article class="srow" id="st-${s.id}"><div class="stext"><p class="kicker">${s.kicker}</p><h3 class="story-title">${s.title}</h3><p class="d">${s.d}</p><ul class="cs">${s.cs.map(([k, v]) => `<li><b>${k}</b> ${v}</li>`).join('')}</ul><div class="tags">${s.tags.map(t => `<span>${t}</span>`).join('')}</div>${(s.prev || []).map(([l, h]) => `<a class="prev" href="${h}" target="_blank" rel="noopener">${l}</a>`).join('')}</div><div class="mini" data-m="${s.id}"></div></article>`).join('');
   STORIES.forEach(s => { const el = $(`[data-m="${s.id}"]`, g); mini(el, s.states.map(x => ({ v: x[1], label: x[0] })), s.draw); });
   reveal($$('.srow', g));
 })();
@@ -425,32 +427,19 @@ const LKV = (() => {
 })();
 
 const TASKS = [
- {t:'Product Finder',c:'Automation',s:'New',tools:['HTML','JavaScript','Excel export'],d:'Paste or upload a list of customer requests and get the right product matched for every row, ready to quote.',story:['Two catalogs: digital SIMs (eSIM) and physical SIM cards, each stored once','Matches on destination, data needed, number of days, type and preferred vendor','Business rules for timing and vendor swaps applied automatically','Result downloads as Excel or CSV'],link:'builds'},
- {t:'Monitoring KPI Sales',c:'Dashboard',s:'New',tools:['HTML','Apps Script'],d:'One-screen sales monitor: achievement vs target per region and country, MoM and YoY, KPI A to E.',story:['Built for a 1920×1080 screen in the sales room','Refreshes through Google Apps Script'],link:'st-kpi'},
- {t:'Revenue & Customer report',c:'Dashboard',s:'New',tools:['HTML','TiDB','Cross-filter'],d:'Multi-page report on revenue and new, returning and extending customers, by marketplace, SKU and country, with a pivot page.',story:['Cross-filter on every chart','Expandable tables with Copy CSV'],link:'st-rev'},
- {t:'Market Share Dashboard',c:'Dashboard',s:'New',tools:['HTML','Market analysis'],d:'Our orders against the whole market, per country and product, with change against the previous period.',story:['Overall view with comparison table','Country view with notes'],link:'st-ms'},
- {t:'Order Business Unit: Inbound and Outbound',c:'Dashboard',s:'New',tools:['HTML','Chart.js','TiDB'],d:'The Order BU dashboard split into two builds, one for outbound travellers and one for inbound visitors.',story:['Growth, forecasting and top plans in both','Refreshes from TiDB on request'],link:'st-obu'},
- {t:'Complaint Dashboard (HTML rebuild)',c:'Dashboard',s:'New',tools:['HTML','TiDB'],d:'Weekly complaint rate against devices in use, moved from Looker Studio to an HTML build on the database.',story:['Per-country rate with change indicators','Operational updates log'],link:'st-cmp'},
- {t:'Order Business Unit Dashboard',c:'Dashboard',s:'Scheduled',tools:['HTML','Chart.js','Claude automation'],d:'Orders by business unit, product and variant. Tabs for growth, forecasting and top plans.',story:['Share pie with per-provider toggles','Month-over-month growth with badges','Drill-down modal per country','Refreshed on a schedule by an automation'],link:'archive'},
- {t:'Supplier Performance Dashboard',c:'Dashboard',s:'Scheduled',tools:['HTML','Chart.js','Claude automation'],d:'Supplier orders sliced by product and plan type, with growth, forecast and top 10 plans.',story:['Gives vendor conversations a shared set of numbers','Projection of the month in progress from run-rate','Top 10 plans per supplier'],link:'st-sup'},
- {t:'Vendor Usage Dashboard',c:'Dashboard',s:'Live',tools:['HTML','Canvas','Forecasting'],d:'GB purchased against GB used per supplier, split by Fixed Plan and Daypass, with pacing.',story:['Tracks utilization of purchased data','Pacing for the month in progress','Average GB per order, per month'],link:'st-sup'},
- {t:'KPI dashboards on the sales database',c:'Dashboard',s:'Live',tools:['Looker Studio','SQL'],d:'Interactive Looker Studio dashboards connected to the sales database for KPIs, sales trends and customer behavior.',story:['Decisions no longer wait for a report','One view for KPIs, trends and behavior']},
- {t:'eSIM & SIM Card Performance report',c:'Dashboard',s:'Live',tools:['Looker Studio'],d:'Looker Studio report on order volume by business unit, supplier and brand vendor across eSIM and SIM card.',story:['Business unit view: monthly volume per product line and top plans','Supplier view: weekly revenue, refunds and settlement per supplier','Brand vendor view: plan and supplier share, monthly trend per supplier'],link:'archive'},
- {t:'Inbound Report',c:'Dashboard',s:'Live',tools:['Looker Studio'],d:'Cost, usage and revenue of the data quota behind the inbound modem fleet.',story:['Daily and monthly usage against devices in use','Cost per GB, quota availability vs usage and revenue vs cost in one table','Quota purchase frequency, product brand mix and sales by source channel'],link:'archive'},
- {t:'Outbound Modem Report',c:'Dashboard',s:'Live',tools:['Looker Studio'],d:'Roaming modem orders, plan mix and data usage across vendors, from order to consumption.',story:['Order plan by month with destination share and device models','Usage in GB per vendor and country with month-over-month change','Orders against spend per vendor to support vendor reviews'],link:'archive'},
- {t:'Revenue & Cost Analytics (dummy data)',c:'Dashboard',s:'Done',tools:['Looker Studio'],d:'Practice dashboard on dummy data covering revenue share, cost against revenue and device usage.',story:['Revenue share by channel with gross revenue scorecard','Monthly cost and revenue with ratio heatmap','Device usage share and counts over time'],link:'archive'},
- {t:'Product-market creation pipeline',c:'Automation',s:'Live',tools:['N8N','VBA','Apps Script','API'],d:'Replaced a monthly manual cycle of finding and maintaining products on every marketplace with a pipeline that runs in minutes.',story:['Covers all marketplaces','Backend SKU and API integration','Run it in the Automation section'],link:'auto'},
- {t:'Automated pricing validation',c:'Governance',s:'Live',tools:['Apps Script','Sheets'],d:'Monitors supplier cost structures and validates prices automatically to reduce human error and protect margin.',story:['Margin floor per SKU','Flags prices before they reach a marketplace'],link:'auto'},
- {t:'Claude-assisted operations',c:'Automation',s:'Live',tools:['Claude','Cloud','Local'],d:'Recurring operational and reporting tasks run through Claude-assisted automations in cloud and local environments.',story:['Scheduled dashboard refreshes','Recurring reporting tasks','Weekly data exports from web portals']},
- {t:'AI agent for CS and Technical teams',c:'Automation',s:'Live',tools:['Claude','Knowledge base'],d:'An agent that helps CS and Technical teams find answers to customer questions and ongoing issues.',story:['Faster answers on open issues','Shared context across both teams']},
- {t:'New SKU concept across marketplaces',c:'Product',s:'Live',tools:['SKU design','API'],d:'Redesigned how SKUs are structured on every marketplace so the frontend team can move or change products with less effort.',story:['Accurate catalog data across systems','I own backend SKU management and API integration']},
- {t:'Product gap analysis',c:'Analysis',s:'Live',tools:['Excel','Sheets'],d:'End-to-end gap analysis with vendors to widen coverage and portfolio competitiveness.',story:['Competitor and market comparison','Vendor action list']},
- {t:'Complaint trend analysis',c:'Analysis',s:'Live',tools:['Sheets','Looker Studio'],d:'Weekly and monthly complaint trends driving corrective actions with vendors.',story:['Better customer satisfaction','Root cause analysis with vendors']},
- {t:'Supplier billing reconciliation',c:'Governance',s:'Live',tools:['Sheets','Apps Script'],d:'Automated reconciliation of supplier billing to remove human error and raise accuracy.',story:['Cost verification','Protects margin on all product lines']},
- {t:'Forecasting for product maintenance',c:'Analysis',s:'Live',tools:['Sheets','Reports'],d:'Forecasting backed by weekly and monthly cost, inventory and purchase reports. Product KPIs hit in 12 of 12 months.',story:['Cost structure reports','Inventory movement','Customer purchase trends']},
- {t:'Internet monitoring for B2B',c:'Product',s:'Live',tools:['Third party','Monitoring'],d:'A monitoring system built with a third party that gives B2B customers features operable from anywhere.',story:['Supports B2B sales']},
- {t:'Reporting database (TiDB Cloud)',c:'Database',s:'Live',tools:['TiDB Cloud','MySQL','SQL views'],d:'My own reporting database: three fact tables of about 2.5M rows in total and nine reporting views that feed the dashboards.',story:['Order, supplier performance and SKU vs product-vendor tables','grouping_plan harmonizes plan names across tables','Reporting logic lives in views'],link:'db'},
- {t:'Server uptime monitoring app',c:'Product',s:'Done',tools:['Research','Process design'],d:'Internship project: app that monitors servers and internet connectivity and reports uptime and downtime.',story:['Designed the end-to-end process flow']}
+ {t:'Product Finder',c:'Automation',s:'Recent',tools:['HTML','JavaScript','Excel export'],d:'Paste or upload a list of customer requests and get the right product matched for every row, ready to quote.',cs:[['Problem','Sales searched a 30,000+ product catalog by hand for every customer request list.'],['Built','A matcher over two catalogs (eSIM and SIM card) that applies the business rules for timing and vendor swaps, with Excel or CSV export.'],['Result','Hours of manual searching per list now take seconds.']],link:'builds'},
+ {t:'Product-market creation pipeline',c:'Automation',s:'Shipped',tools:['VBA','Apps Script','API','N8N'],d:'Replaced a monthly manual cycle of finding and maintaining products on every marketplace with a pipeline that runs in minutes.',cs:[['Problem','Creating and maintaining products on every marketplace was a manual, month-long cycle.'],['Built','A pipeline from supplier feeds through normalization, SKU mapping and price checks to an API push to each marketplace.'],['Result','20,000+ SKUs processed in one run: from a monthly cycle to minutes.']],link:'auto'},
+ {t:'Automated pricing validation',c:'Governance',s:'Shipped',tools:['Apps Script','Sheets'],d:'Recomputes a margin floor from supplier cost, FX and fees for every SKU and blocks prices below it.',cs:[['Problem','Supplier costs and FX move, and a manual price check let below-margin prices slip through.'],['Built','A validator that recomputes the margin floor per SKU and flags prices before they reach a marketplace.'],['Result','Less human error and protected margin across product lines.']],link:'auto'},
+ {t:'AI-assisted operations',c:'Automation',s:'Shipped',tools:['Claude','Knowledge base'],d:'An AI agent for CS and Technical teams, plus AI-assisted automations for recurring reporting work.',cs:[['Problem','CS and Technical teams searched scattered notes for answers, and recurring reports and data exports were done by hand.'],['Built','A knowledge-base agent for both teams, and scheduled AI-assisted runs for dashboard refreshes and weekly portal exports.'],['Result','Faster answers on open issues and recurring reporting that runs without manual steps.']]},
+ {t:'Interactive HTML dashboard suite',c:'Dashboard',s:'Recent',tools:['HTML','Chart.js','TiDB','Apps Script'],d:'Sales KPI, revenue and customer, market share, orders by business unit, complaints, and supplier and vendor usage.',cs:[['Problem','Looker Studio reports were slow to filter and each refresh started with an export.'],['Built','Six interactive HTML dashboards with cross-filtering, forecasts and CSV export, read from the reporting database.'],['Result','Refreshes are one query, and the same view answers questions for sales, product and vendor teams.']],link:'builds'},
+ {t:'Looker Studio reporting suite',c:'Dashboard',s:'Shipped',tools:['Looker Studio','SQL'],d:'KPI, product performance, supplier and fleet reports on the sales database, used in recurring reviews.',cs:[['Problem','Decisions waited for someone to compile a report.'],['Built','Looker Studio reports on KPIs, sales trends, eSIM and SIM card performance, and inbound and outbound fleet cost and usage.'],['Result','One view for KPIs, trends and vendor reviews, available whenever it is needed.']],link:'archive'},
+ {t:'Reporting database',c:'Database',s:'Shipped',tools:['TiDB Cloud','MySQL','SQL views'],d:'A reporting database with three fact tables (millions of rows) and nine views that feed the dashboards.',cs:[['Problem','Every dashboard refresh started from a fresh export and manual cleanup.'],['Built','Fact tables for orders, supplier orders and SKU-to-vendor mapping, a plan-grouping column that harmonizes plan names, and reporting logic in views.'],['Result','Dashboards read from shared views, so numbers match across reports.']],link:'db'},
+ {t:'New SKU concept across marketplaces',c:'Product',s:'Shipped',tools:['SKU design','API'],d:'Redesigned how SKUs are structured on every marketplace so the frontend team can move or change products with less effort.',cs:[['Problem','The old SKU structure made moving or changing products on marketplaces slow for the frontend team.'],['Built','A new SKU concept, with backend SKU management and API integration that I own.'],['Result','Accurate catalog data across systems and less effort per product change.']]},
+ {t:'Product gap analysis',c:'Analysis',s:'Shipped',tools:['Excel','Sheets'],d:'End-to-end gap analysis with vendors to widen coverage and portfolio competitiveness.',cs:[['Problem','Coverage gaps against competitors were not mapped systematically.'],['Built','A competitor and market comparison per destination and plan, turned into a vendor action list.'],['Result','Wider coverage and a more competitive product portfolio.']]},
+ {t:'Complaint trend analysis',c:'Analysis',s:'Shipped',tools:['Sheets','Looker Studio'],d:'Weekly and monthly complaint trends driving corrective actions with vendors.',cs:[['Problem','Complaints were handled case by case, without a view of recurring causes.'],['Built','Weekly and monthly trend analysis with root cause review alongside vendors.'],['Result','Corrective actions with vendors and better customer satisfaction.']]},
+ {t:'Supplier billing reconciliation',c:'Governance',s:'Shipped',tools:['Sheets','Apps Script'],d:'Automated reconciliation of supplier billing to remove human error and raise accuracy.',cs:[['Problem','Supplier bills were checked by hand against our records.'],['Built','An automated reconciliation and cost verification flow.'],['Result','Fewer errors and protected margin on all product lines.']]},
+ {t:'Forecasting for product maintenance',c:'Analysis',s:'Shipped',tools:['Sheets','Reports'],d:'Forecasting backed by weekly and monthly cost, inventory and purchase reports.',cs:[['Problem','Product maintenance needed to anticipate cost, stock and demand rather than react.'],['Built','Weekly and monthly reports on cost structure, inventory movement and customer purchase trends, feeding a forecast.'],['Result','Product KPIs achieved in 12 of 12 months.']]},
+ {t:'Internet monitoring for B2B',c:'Product',s:'Shipped',tools:['Third party','Monitoring'],d:'A monitoring system built with a third party that gives B2B customers features operable from anywhere.',cs:[['Problem','B2B customers needed to manage their connectivity remotely.'],['Built','A monitoring system delivered with a third-party partner.'],['Result','A feature set that supports B2B sales.']]}
 ];
 (() => {
   const cats = ['All', ...new Set(TASKS.map(t => t.c))]; let cat = 'All', q = '';
@@ -476,7 +465,7 @@ const TASKS = [
   if (document.fonts) document.fonts.ready.then(fit);
   $('#logChips').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; $$('#logChips button').forEach(x => x.classList.toggle('on', x === b)); render(); });
   $('#logSearch').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
-  const open = el => { const t = TASKS[+el.dataset.i]; $('#modalBody').innerHTML = `<p class="kicker">${t.c} · ${t.s}</p><h3>${t.t}</h3><p>${t.d}</p><ul>${t.story.map(s => `<li>${s}</li>`).join('')}</ul><div class="tags">${t.tools.map(x => `<span>${x}</span>`).join('')}</div>${t.link ? `<a class="btn dark go" href="#${t.link}" data-close>See it on this page →</a>` : ''}`; $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden', 'false'); };
+  const open = el => { const t = TASKS[+el.dataset.i]; $('#modalBody').innerHTML = `<p class="kicker">${t.c} · ${t.s}</p><h3>${t.t}</h3><p>${t.d}</p><ul class="cs">${t.cs.map(([k, v]) => `<li><b>${k}</b> ${v}</li>`).join('')}</ul><div class="tags">${t.tools.map(x => `<span>${x}</span>`).join('')}</div>${t.link ? `<a class="btn dark go" href="#${t.link}" data-close>See it on this page →</a>` : ''}`; $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden', 'false'); };
   $('#logList').addEventListener('click', e => { const el = e.target.closest('.entry'); if (el) open(el); });
   $('#logList').addEventListener('keydown', e => { if (e.key === 'Enter') { const el = e.target.closest('.entry'); if (el) open(el); } });
   render();
@@ -486,16 +475,9 @@ $('#modalX').addEventListener('click', closeModal);
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.target.closest('[data-close]')) closeModal(); });
 
 const SHOTS = [
- {name:'Monitoring KPI Sales',file:'dashboards/monitoring-kpi-sales.html',blurb:'Achievement vs target per region and country, MoM, YoY and KPI A to E.',views:[['Overview','kpi-main']]},
- {name:'Revenue & Customer',file:'dashboards/revenue-customer.html',blurb:'Revenue by new, returning and extending customers, channel and product.',views:[['Summary','rev-main']]},
- {name:'Order Business Unit',file:'project_order_business_unit_dashboard.html',blurb:'Orders by business unit, product and variant.',views:[['Overview','bu-main'],['Growth BU','bu-growth'],['Forecasting','bu-forecast']]},
- {name:'Supplier Performance',file:'project_supplier_performance_dashboard.html',blurb:'Supplier orders, revenue and market share.',views:[['Overview','sup-main'],['Growth Supplier','sup-growth'],['Forecasting','sup-forecast']]},
- {name:'Vendor Usage',file:'project_vendor_usage_dashboard.html',blurb:'GB purchased against GB used per supplier.',views:[['Usage','usage-main'],['Forecasting and insight','usage-forecast']]},
  {name:'eSIM & SIM Card Performance',src:'Looker Studio · recreated with altered data',blurb:'Order volume by business unit, supplier and brand vendor.',views:[['Business Unit','lk-esim-bu'],['Supplier','lk-esim-supplier'],['Brand Vendor','lk-esim-vendor']]},
  {name:'Inbound Report',src:'Looker Studio · recreated with altered data',blurb:'Data quota cost, usage and revenue for the inbound modem fleet.',views:[['Cost & Usage','lk-inbound-usage'],['Revenue','lk-inbound-revenue'],['Cost per SIM Provider','lk-inbound-provider']]},
- {name:'Outbound Modem Report',src:'Looker Studio · recreated with altered data',blurb:'Roaming modem orders, plan mix and data usage across vendors.',views:[['Plan & Destination','lk-outbound-plan'],['Usage','lk-outbound-usage'],['Vendor A Orders','lk-outbound-vendor-a'],['Vendor B Orders','lk-outbound-vendor-b']]},
- {name:'Complaint Dashboard (Looker)',src:'Looker Studio · recreated with altered data',blurb:'The Looker Studio version before the HTML rebuild.',views:[['Overview','lk-complaint']]},
- {name:'Revenue & Cost Analytics',src:'Looker Studio · dummy data, recreated',blurb:'Practice build on dummy data.',views:[['Overview','lk-revcost']]}
+ {name:'Outbound Modem Report',src:'Looker Studio · recreated with altered data',blurb:'Roaming modem orders, plan mix and data usage across vendors.',views:[['Plan & Destination','lk-outbound-plan'],['Usage','lk-outbound-usage'],['Vendor A Orders','lk-outbound-vendor-a'],['Vendor B Orders','lk-outbound-vendor-b']]}
 ];
 (() => {
   let gi = 0, gv = 0;
@@ -519,21 +501,21 @@ const SHOTS = [
 
 (() => {
   const DBT = [
-   {n:'Order_BusinessUnit',rows:'~1.0M',note:'Orders by business unit, provider, SKU and plan',cols:'row_id*,assignment_id,detail_order_id,assigntime,business_unit,source,order_id,imei,product_brand,provider,sku,product_name,quota,variant,days,order_plan,month,date,start_date,end_date,row,grouping_plan'},
-   {n:'supplier_performance',rows:'~1.15M',note:'Supplier orders, plans and settlement amounts',cols:'row_id*,product_name,countries_plan,quota,days,type,model_group_name,start_time_of_validity,total_settlement_amount,status,date_m_d_y,provider,date_looker,week,month,row,days_int#,settlement_amount#,date_looker_dt#,date_m_d_y_dt#,grouping_plan'},
-   {n:'SKU_Vs_ProductVendor',rows:'~334K',note:'SKU to product and vendor mapping with activation details',cols:'id*,assign_time,month,business_unit,source,order_id,product_category,iccid_imei,product_brand_txt,provider,SKU,country_plan,quota,variant,days,product_plan,qty,start_date,end_date,unit_qty,product_plan_Supplier,Supplier,activation_status,supplier_goodsid,activation_id,activation_by,activation_time,iccid/imei,grouping_plan'}
+   {n:'orders_fact',rows:'fact',note:'Orders by business unit, channel, product and plan',cols:'order_key*,order_date,month,business_unit,channel,product_type,product_brand,supplier,sku,product_name,destination,data_quota,validity_days,plan_type,start_date,end_date,plan_group'},
+   {n:'supplier_orders_fact',rows:'fact',note:'Supplier orders, plans and settlement amounts',cols:'row_key*,order_date,week,month,supplier,product_name,destination,data_quota,validity_days,plan_type,order_status,settlement_amount#,validity_days_int#,order_date_dt#,plan_group'},
+   {n:'sku_vendor_map',rows:'map',note:'SKU to product and vendor mapping with activation status',cols:'map_key*,order_date,month,business_unit,channel,product_category,sku,supplier,supplier_product,destination,data_quota,validity_days,qty,activation_status,activation_time,plan_group'}
   ];
   const DBV = ['v_aov_trend','v_country_summary','v_day_of_week','v_detail_with_gb','v_mom_growth','v_monthly_summary','v_refund_rate','v_type_comparison','v_weekly_summary'];
   let ti = 0;
   const render = () => {
-    $('#tbls').innerHTML = DBT.map((t, i) => `<button class="${i === ti ? 'on' : ''}" data-t="${i}"><b>${t.n}</b><span class="rows">${t.rows}</span> <small>rows</small></button>`).join('');
+    $('#tbls').innerHTML = DBT.map((t, i) => `<button class="${i === ti ? 'on' : ''}" data-t="${i}"><b>${t.n}</b><span class="rows">${t.rows}</span> <small>table</small></button>`).join('');
     const t = DBT[ti], cols = t.cols.split(',');
     $('#tinfo').innerHTML = `<p>${t.note}. ${cols.length} columns. <span style="color:#ffb3a6">PK</span> primary key · <span style="color:#7dd3a0">dashed</span> typed helper column.</p>`;
     $('#cols').innerHTML = cols.map((c, i) => { const st = `style="animation-delay:${i * 18}ms"`; return c.endsWith('*') ? `<span class="k" ${st}>${c.slice(0, -1)} · PK</span>` : c.endsWith('#') ? `<span class="t" ${st}>${c.slice(0, -1)}</span>` : `<span ${st}>${c}</span>`; }).join('');
   };
   $('#tbls').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; ti = +b.dataset.t; render(); });
   $('#views').innerHTML = DBV.map(v => `<span>${v}</span>`).join('');
-  $('#sql').innerHTML = '<b>SELECT</b> month, provider, <b>COUNT</b>(*) <b>AS</b> orders\n<b>FROM</b> Order_BusinessUnit\n<b>GROUP BY</b> month, provider\n<b>ORDER BY</b> month, orders <b>DESC</b>;';
+  $('#sql').innerHTML = '<b>SELECT</b> month, supplier, <b>COUNT</b>(*) <b>AS</b> orders\n<b>FROM</b> orders_fact\n<b>GROUP BY</b> month, supplier\n<b>ORDER BY</b> month, orders <b>DESC</b>;';
   render();
 })();
 
@@ -576,10 +558,10 @@ const SHOTS = [
 
 (() => {
   const SK = {
-    'Data and automation': ['Looker Studio', 'Interactive HTML dashboards', 'SQL (TiDB / MySQL)', 'Advanced Google Sheets and Excel', 'Google Apps Script', 'VBA', 'N8N', 'Claude-assisted automation', 'API integration'],
-    'Product and commercial': ['Product operations', 'Catalog and SKU management', 'Pricing strategy', 'Pricing governance', 'Margin control', 'Competitor and market analysis', 'Product gap analysis', 'Revenue analysis'],
-    'Operations and vendors': ['Process optimization', 'Root cause analysis', 'Inventory and supply monitoring', 'Launch readiness', 'Vendor management', 'Billing reconciliation', 'Cost verification', 'Complaint analysis'],
-    'Working style': ['Analytical thinking', 'Problem solving', 'Attention to detail', 'Stakeholder communication', 'Ownership and accountability']
+    'Data and reporting': ['SQL (TiDB / MySQL)', 'Advanced Excel and Google Sheets', 'Looker Studio', 'Interactive HTML dashboards (Chart.js)'],
+    'Automation': ['Google Apps Script', 'VBA', 'API integration', 'AI-assisted automation (Claude)'],
+    'Product and commercial': ['Catalog and SKU management', 'Pricing governance and margin control', 'Competitor and market analysis', 'Product gap analysis', 'Revenue analysis'],
+    'Operations and vendors': ['Vendor management', 'Billing reconciliation and cost verification', 'Complaint and root cause analysis', 'Inventory and supply monitoring', 'Launch readiness']
   };
   $('#skillGrid').innerHTML = Object.entries(SK).map(([k, v]) => `<div><h3>${k}</h3><ul>${v.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('');
 })();
