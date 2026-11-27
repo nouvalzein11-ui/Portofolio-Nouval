@@ -335,3 +335,13 @@ section{position:relative}
 .arc-grp{font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:16px 0 6px}
 .arc-grp:first-child{padding-top:10px}
 #arcBody.live{cursor:pointer}#arcBody.live:hover img{opacity:.92}
+.arc-desc{margin:18px 4px 6px;padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:default;font-size:14.5px;color:var(--ink2)}
+.arc-desc h4{font:700 20px var(--serif);color:var(--ink);margin:4px 0 8px}
+.arc-desc p{margin:0 0 10px}.arc-desc .use b{color:var(--ink)}
+.arc-desc .kicker{margin:14px 0 6px}.arc-desc .kicker:first-child{margin-top:0}
+.arc-desc ul{list-style:none;padding:0;margin:0 0 12px;display:grid;grid-template-columns:1fr 1fr;gap:4px 22px}
+.arc-desc li{position:relative;padding:3px 0 3px 16px;font-size:13.5px}
+.arc-desc li:before{content:"";position:absolute;left:0;top:12px;width:7px;height:2px;background:var(--accent)}
+.arc-desc .src{font-size:12.5px;color:var(--mute)}.arc-desc .btn{margin-top:4px;display:inline-block}
+@media(max-width:860px){.arc-desc ul{grid-template-columns:1fr}}
+.arc-body{height:auto!important;overflow:visible}
