@@ -154,7 +154,8 @@ section{position:relative}
 .chips button.on{background:var(--ink);border-color:var(--ink);color:#fff}
 #logSearch{border:1px solid #cfccc4;border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;min-width:280px;background:#fff}
 .log-count{font-size:13px;color:var(--mute);margin:16px 0 4px}
-.log-list{border-top:1px solid var(--rule)}
+.log-list{border-top:1px solid var(--rule);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#cfccc4 transparent}
+.log-list.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 56px),transparent);mask-image:linear-gradient(#000 calc(100% - 56px),transparent)}
 .entry{display:grid;grid-template-columns:120px 1fr 160px;gap:22px;padding:18px 0;border-bottom:1px solid #dcd9d1;cursor:pointer;align-items:start;transition:padding .25s}
 .entry:hover{padding-left:8px}
 .entry:hover h3{color:var(--accent)}
@@ -297,6 +298,7 @@ section{position:relative}
   .film,.mini{break-inside:avoid}
   .arc-body{height:auto;overflow:visible}
   .rv{opacity:1;transform:none}
+  .log-list{max-height:none!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important}
   .entry,.srow,.timeline article{break-inside:avoid}
 }
 

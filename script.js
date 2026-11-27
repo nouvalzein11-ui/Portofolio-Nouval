@@ -459,7 +459,21 @@ const TASKS = [
     const list = TASKS.map((t, i) => [t, i]).filter(([t]) => (cat === 'All' || t.c === cat) && (!q || (t.t + ' ' + t.d + ' ' + t.tools.join(' ')).toLowerCase().includes(q)));
     $('#logCount').textContent = list.length + ' of ' + TASKS.length + ' entries';
     $('#logList').innerHTML = list.map(([t, i]) => `<div class="entry" tabindex="0" data-i="${i}"><span class="cat">${t.c}</span><div><h3>${t.t}</h3><p>${t.d}</p></div><div class="meta"><b class="s-${t.s}">${t.s}</b><br>${t.tools.join(' · ')}</div></div>`).join('');
+    if (list.length > SHOW) $('#logCount').textContent += ' · showing ' + SHOW + ', scroll the list for the rest';
+    fit();
   };
+  // Show the first SHOW entries; the rest scroll inside the list
+  const SHOW = 5, L = $('#logList');
+  const edge = () => L.classList.toggle('more', L.scrollHeight - L.scrollTop - L.clientHeight > 4);
+  function fit() {
+    L.style.maxHeight = ''; L.scrollTop = 0;
+    const e = L.children;
+    if (e.length > SHOW) L.style.maxHeight = Math.ceil(e[SHOW].getBoundingClientRect().top - L.getBoundingClientRect().top) + 'px';
+    edge();
+  }
+  L.addEventListener('scroll', edge, { passive: true });
+  addEventListener('resize', fit); addEventListener('load', fit);
+  if (document.fonts) document.fonts.ready.then(fit);
   $('#logChips').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; $$('#logChips button').forEach(x => x.classList.toggle('on', x === b)); render(); });
   $('#logSearch').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
   const open = el => { const t = TASKS[+el.dataset.i]; $('#modalBody').innerHTML = `<p class="kicker">${t.c} · ${t.s}</p><h3>${t.t}</h3><p>${t.d}</p><ul>${t.story.map(s => `<li>${s}</li>`).join('')}</ul><div class="tags">${t.tools.map(x => `<span>${x}</span>`).join('')}</div>${t.link ? `<a class="btn dark go" href="#${t.link}" data-close>See it on this page →</a>` : ''}`; $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden', 'false'); };
